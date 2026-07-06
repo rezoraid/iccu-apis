@@ -12,7 +12,7 @@ module.exports = {
     random: { label: 'random', order: 3 }
   },
   telegram: {
-    token: process.env.TELEGRAM_BOT_TOKEN || '8430060783:AAFuXyzlfad7zrtpgIFvgtlnNJwaIQCryVk',
+    token: process.env.TELEGRAM_BOT_TOKEN || '8882822405:AAGOmdR_zDuiqmrbW9xjPFMUBV1pE8877Ew',
     ownerIds: (process.env.TELEGRAM_OWNER_IDS || '8774505908')
       .split(',')
       .map((s) => s.trim())
