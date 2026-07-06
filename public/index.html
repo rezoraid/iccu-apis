@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ICCU APIS</title>
+<link rel="icon" href="data:," />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css">
+</head>
+<body>
+
+<div class="frame">
+
+  <aside class="rail">
+    <div class="rail-top">
+      <div class="mark">
+        <span class="mark-dot" aria-hidden="true"></span>
+        <span class="mark-text">ICCU APIS</span>
+      </div>
+      <p class="rail-tagline" id="tagline"></p>
+    </div>
+
+    <div class="rail-bottom">
+      <div class="rail-stat">
+        <span id="routeCount">0</span> endpoint aktif
+      </div>
+    </div>
+  </aside>
+
+  <main class="stage">
+
+    <header class="stage-head">
+      <h1>Semua endpoint, tinggal pilih.</h1>
+      <p>Klik salah satu endpoint, isi kolom yang diminta, lalu jalankan. Hasilnya langsung tampil, lengkap dengan waktu respons.</p>
+      <div class="search-cluster">
+        <div class="search-row">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          <input id="filterInput" type="text" placeholder="Cari nama atau path endpoint..." autocomplete="off" />
+          <span class="kbd">/</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="boot-loader" id="bootLoader">
+      <span class="spinner"></span> memuat daftar endpoint...
+    </div>
+    <div class="log" id="log" role="list" hidden></div>
+
+    <footer class="stage-foot">
+      <span>Base URL</span>
+      <code id="baseUrl"></code>
+      <button class="copy-base-btn" id="copyBaseBtn" type="button">Salin</button>
+    </footer>
+
+  </main>
+
+</div>
+
+<template id="routeRowTemplate">
+  <article class="row" role="listitem">
+    <button class="row-head" type="button">
+      <span class="dot" aria-hidden="true"></span>
+      <span class="verb"></span>
+      <span class="path"></span>
+      <span class="name"></span>
+      <span class="chev" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </button>
+    <div class="row-body">
+      <p class="desc"></p>
+
+      <div class="divider"></div>
+
+      <div class="fields"></div>
+
+      <div class="row-actions">
+        <button class="autofill-btn" type="button" title="Isi contoh data biar bisa langsung dicoba">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Example
+        </button>
+        <button class="run-btn" type="button">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Try It
+        </button>
+      </div>
+
+      <div class="endpoint-box" hidden>
+        <div class="endpoint-line">
+          <code class="built-url"></code>
+          <button class="copy-endpoint-btn" type="button" title="Salin link endpoint" aria-label="Salin link endpoint">
+            <svg class="icon-copy" width="13" height="13" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="result" hidden>
+        <div class="result-loading" hidden>
+          <span class="spinner"></span> menunggu respons dari server...
+        </div>
+        <div class="result-head" hidden>
+          <div class="result-meta">
+            <span class="result-status"></span>
+            <span class="result-time"></span>
+            <span class="result-size"></span>
+          </div>
+          <button class="copy-result-btn" type="button">
+            <svg class="icon-copy-result" width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="2"/></svg>
+            <span class="copy-label">Salin</span>
+          </button>
+        </div>
+        <pre class="result-json" hidden></pre>
+        <img class="result-image" hidden alt="" />
+      </div>
+    </div>
+  </article>
+</template>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>

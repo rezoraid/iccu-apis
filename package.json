@@ -1,0 +1,26 @@
+{
+  "name": "gateway-api",
+  "version": "1.0.0",
+  "description": "Self-documenting REST API gateway with auto-loaded routes",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.4",
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "form-data": "^4.0.0",
+    "node-telegram-bot-api": "^0.66.0",
+    "yt-search": "^2.11.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
