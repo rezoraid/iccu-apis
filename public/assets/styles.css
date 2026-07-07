@@ -456,7 +456,9 @@ button {
 .result-loading[hidden],
 .result-head[hidden],
 .result-json[hidden],
-.result-image[hidden] {
+.result-image[hidden],
+.result-audio[hidden],
+.result-video[hidden] {
   display: none;
 }
 
