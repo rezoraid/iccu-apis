@@ -537,6 +537,17 @@ button {
   height: auto;
 }
 
+.result-audio {
+  display: block;
+  width: 100%;
+}
+
+.result-video {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-sm);
+}
+
 .stage-foot {
   margin-top: 48px;
   padding-top: 22px;

@@ -26,6 +26,15 @@
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
   }
 
+  function extFromMime(mime) {
+    const map = {
+      'image/png': 'png', 'image/jpeg': 'jpg', 'image/webp': 'webp', 'image/gif': 'gif',
+      'audio/mpeg': 'mp3', 'audio/mp4': 'm4a', 'audio/wav': 'wav', 'audio/ogg': 'ogg',
+      'video/mp4': 'mp4', 'video/webm': 'webm', 'video/quicktime': 'mov'
+    };
+    return map[mime] || 'bin';
+  }
+
   async function copyText(text, btn) {
     try {
       await navigator.clipboard.writeText(text);
@@ -150,6 +159,8 @@
     const resultIcon = node.querySelector('.icon-copy-result');
     const resultJson = node.querySelector('.result-json');
     const resultImage = node.querySelector('.result-image');
+    const resultAudio = node.querySelector('.result-audio');
+    const resultVideo = node.querySelector('.result-video');
 
     let lastResultText = '';
     let lastResultBlob = null;
@@ -248,7 +259,7 @@
         const url = URL.createObjectURL(lastResultBlob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `download-${Date.now()}.png`;
+        a.download = `download-${Date.now()}.${extFromMime(lastResultBlob.type)}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -284,6 +295,8 @@
       resultHead.hidden = true;
       resultJson.hidden = true;
       resultImage.hidden = true;
+      resultAudio.hidden = true;
+      resultVideo.hidden = true;
       runBtn.disabled = true;
 
       const stopLoading = () => {
@@ -303,12 +316,23 @@
         resultStatus.classList.toggle('err', !response.ok);
         resultTime.textContent = `${elapsedMs} ms`;
 
-        if (contentType.startsWith('image/')) {
+        if (contentType.startsWith('image/') || contentType.startsWith('audio/') || contentType.startsWith('video/')) {
           const blob = await response.blob();
           lastResultBlob = blob;
           resultSize.textContent = formatBytes(blob.size);
-          resultImage.src = URL.createObjectURL(blob);
-          resultImage.hidden = false;
+          const objectUrl = URL.createObjectURL(blob);
+
+          if (contentType.startsWith('image/')) {
+            resultImage.src = objectUrl;
+            resultImage.hidden = false;
+          } else if (contentType.startsWith('audio/')) {
+            resultAudio.src = objectUrl;
+            resultAudio.hidden = false;
+          } else {
+            resultVideo.src = objectUrl;
+            resultVideo.hidden = false;
+          }
+
           copyLabel.textContent = 'Unduh';
           if (resultIcon) {
             resultIcon.outerHTML = '<svg class="icon-copy-result" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
