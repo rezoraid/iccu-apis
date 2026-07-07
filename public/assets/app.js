@@ -77,6 +77,7 @@
       el('tagline').textContent = manifest.identity.tagline;
       el('routeCount').textContent = routes.length;
       el('routeCount').classList.remove('is-loading');
+      el('routeCountLabel').classList.remove('is-loading');
       el('baseUrl').textContent = window.location.origin;
       document.title = manifest.identity.name;
 

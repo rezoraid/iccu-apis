@@ -20,12 +20,12 @@
         <span class="mark-dot" aria-hidden="true"></span>
         <span class="mark-text">ICCU APIS</span>
       </div>
-      <p class="rail-tagline" id="tagline"></p>
+      <p class="rail-tagline" id="tagline">Rest API simple, free, dan 100% lebih lengkap.</p>
     </div>
 
     <div class="rail-bottom">
       <div class="rail-stat">
-        <span id="routeCount" class="is-loading">0</span> endpoint aktif
+        <span id="routeCount" class="is-loading">0</span><span id="routeCountLabel" class="is-loading"> endpoint aktif</span>
       </div>
     </div>
   </aside>
@@ -44,8 +44,11 @@
       </div>
     </header>
 
-    <div class="boot-loader" id="bootLoader">
-      <span class="spinner"></span> memuat daftar endpoint...
+    <div class="skeleton-list" id="bootLoader">
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
+      <div class="skeleton-row"></div>
     </div>
     <div class="log" id="log" role="list" hidden></div>
 
