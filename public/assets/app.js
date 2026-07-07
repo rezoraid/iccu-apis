@@ -82,8 +82,14 @@
 
       renderLog();
     } catch (err) {
-      logEl.innerHTML = '<p class="empty-state">Gagal memuat endpoint. Coba muat ulang halaman.</p>';
-      logEl.hidden = false;
+      // if SSR already rendered the endpoint list, leave it in place —
+      // only show the hard error state when there's truly nothing on screen
+      if (!logEl.children.length) {
+        logEl.innerHTML = '<p class="empty-state">Gagal memuat endpoint. Coba muat ulang halaman.</p>';
+        logEl.hidden = false;
+      }
+      filterInput.disabled = true;
+      filterInput.placeholder = 'Pencarian tidak tersedia (gagal memuat data)';
     } finally {
       bootLoader.hidden = true;
     }
