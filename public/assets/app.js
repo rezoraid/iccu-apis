@@ -294,9 +294,9 @@
       resultLoading.classList.remove('is-done');
       resultHead.hidden = true;
       resultJson.hidden = true;
-      resultImage.hidden = true;
-      resultAudio.hidden = true;
-      resultVideo.hidden = true;
+      if (resultImage) resultImage.hidden = true;
+      if (resultAudio) resultAudio.hidden = true;
+      if (resultVideo) resultVideo.hidden = true;
       runBtn.disabled = true;
 
       const stopLoading = () => {
@@ -322,15 +322,19 @@
           resultSize.textContent = formatBytes(blob.size);
           const objectUrl = URL.createObjectURL(blob);
 
-          if (contentType.startsWith('image/')) {
+          if (contentType.startsWith('image/') && resultImage) {
             resultImage.src = objectUrl;
             resultImage.hidden = false;
-          } else if (contentType.startsWith('audio/')) {
+          } else if (contentType.startsWith('audio/') && resultAudio) {
             resultAudio.src = objectUrl;
             resultAudio.hidden = false;
-          } else {
+          } else if (contentType.startsWith('video/') && resultVideo) {
             resultVideo.src = objectUrl;
             resultVideo.hidden = false;
+          } else {
+            // template doesn't have the right element yet — fall back to a download link
+            resultJson.textContent = `Media file (${contentType}) diterima, tapi player belum tersedia. Gunakan tombol download.`;
+            resultJson.hidden = false;
           }
 
           copyLabel.textContent = 'Unduh';
