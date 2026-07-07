@@ -121,7 +121,11 @@
       title.textContent = groupLabel(g);
       logEl.appendChild(title);
 
-      items.forEach((route) => logEl.appendChild(buildRow(route)));
+      items.forEach((route, i) => {
+        const row = buildRow(route);
+        row.style.animationDelay = `${Math.min(i, 10) * 0.05}s`;
+        logEl.appendChild(row);
+      });
     });
 
     if (!logEl.children.length) {
