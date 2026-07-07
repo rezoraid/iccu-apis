@@ -10,13 +10,14 @@
 
   let manifest = null;
   let routes = [];
+  let firstRender = true;
 
   function groupLabel(key) {
-    return manifest.groups[key]?.label || key;
+    return manifest.groups?.[key]?.label || key;
   }
 
   function groupOrder(key) {
-    return manifest.groups[key]?.order ?? 99;
+    return manifest.groups?.[key]?.order ?? 99;
   }
 
   function formatBytes(bytes) {
@@ -66,6 +67,7 @@
 
       el('tagline').textContent = manifest.identity.tagline;
       el('routeCount').textContent = routes.length;
+      el('routeCount').classList.remove('is-loading');
       el('baseUrl').textContent = window.location.origin;
       document.title = manifest.identity.name;
 
@@ -111,6 +113,11 @@
       empty.className = 'empty-state';
       empty.textContent = 'Tidak ada endpoint yang cocok dengan pencarian itu.';
       logEl.appendChild(empty);
+    }
+
+    if (firstRender) {
+      requestAnimationFrame(() => logEl.classList.add('is-visible'));
+      firstRender = false;
     }
   }
 

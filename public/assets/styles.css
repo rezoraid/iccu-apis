@@ -103,7 +103,8 @@ button {
   font-weight: 500;
 }
 
-.rail-bottom #routeCount { color: var(--accent); font-family: var(--mono); font-weight: 700; }
+.rail-bottom #routeCount { color: var(--accent); font-family: var(--mono); font-weight: 700; transition: opacity 0.3s ease; }
+.rail-bottom #routeCount.is-loading { opacity: 0; }
 
 .stage {
   padding: 52px 56px 80px;
@@ -193,6 +194,13 @@ button {
   display: flex;
   flex-direction: column;
   gap: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.log.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .log-group-title {
