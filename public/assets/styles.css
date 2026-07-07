@@ -328,7 +328,7 @@ button {
   margin-bottom: 5px;
 }
 
-.field input {
+.field input, .field select {
   width: 100%;
   background: #fff;
   border: 2px solid var(--border);
@@ -341,8 +341,9 @@ button {
   transition: border-color 0.3s ease;
 }
 
-.field input:focus { border-color: var(--accent); }
-.field input.invalid { border-color: var(--bad); background: var(--bad-soft); }
+.field select { cursor: pointer; }
+.field input:focus, .field select:focus { border-color: var(--accent); }
+.field input.invalid, .field select.invalid { border-color: var(--bad); background: var(--bad-soft); }
 
 .row-actions {
   display: flex;

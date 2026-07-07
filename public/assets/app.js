@@ -156,7 +156,7 @@
     let currentUrl = '';
 
     function updateBuiltUrl() {
-      const inputs = [...fieldsEl.querySelectorAll('input')];
+      const inputs = [...fieldsEl.querySelectorAll('input, select')];
       const query = new URLSearchParams();
       inputs.forEach((input) => {
         const val = input.value.trim();
@@ -171,17 +171,47 @@
       const wrap = document.createElement('div');
       wrap.className = 'field';
       wrap.innerHTML = `<label for="p-${route.path}-${param.key}">${param.key}${param.required ? '' : ' (opsional)'}</label>`;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.id = `p-${route.path}-${param.key}`;
-      input.placeholder = param.hint || '';
-      input.dataset.key = param.key;
-      input.dataset.required = param.required ? '1' : '0';
-      
-      input.addEventListener('input', () => {
-        input.classList.remove('invalid');
-        updateBuiltUrl();
-      });
+
+      let input;
+      if (Array.isArray(param.options) && param.options.length) {
+        input = document.createElement('select');
+        input.id = `p-${route.path}-${param.key}`;
+        input.dataset.key = param.key;
+        input.dataset.required = param.required ? '1' : '0';
+
+        if (!param.required) {
+          const emptyOpt = document.createElement('option');
+          emptyOpt.value = '';
+          emptyOpt.textContent = param.hint || 'Pilih...';
+          input.appendChild(emptyOpt);
+        }
+
+        param.options.forEach((opt) => {
+          const optionEl = document.createElement('option');
+          optionEl.value = opt;
+          optionEl.textContent = opt;
+          if (opt === param.example) optionEl.selected = true;
+          input.appendChild(optionEl);
+        });
+
+        input.addEventListener('change', () => {
+          input.classList.remove('invalid');
+          updateBuiltUrl();
+        });
+      } else {
+        input = document.createElement('input');
+        input.type = 'text';
+        input.id = `p-${route.path}-${param.key}`;
+        input.placeholder = param.hint || '';
+        input.dataset.key = param.key;
+        input.dataset.required = param.required ? '1' : '0';
+
+        input.addEventListener('input', () => {
+          input.classList.remove('invalid');
+          updateBuiltUrl();
+        });
+      }
+
       wrap.appendChild(input);
       fieldsEl.appendChild(wrap);
     });
@@ -193,7 +223,7 @@
     }
 
     autofillBtn.addEventListener('click', () => {
-      const inputs = [...fieldsEl.querySelectorAll('input')];
+      const inputs = [...fieldsEl.querySelectorAll('input, select')];
       inputs.forEach((input) => {
         const param = route.params.find((p) => p.key === input.dataset.key);
         if (param) {
@@ -229,7 +259,7 @@
     });
 
     runBtn.addEventListener('click', async () => {
-      const inputs = [...fieldsEl.querySelectorAll('input')];
+      const inputs = [...fieldsEl.querySelectorAll('input, select')];
       let valid = true;
 
       inputs.forEach((input) => {
